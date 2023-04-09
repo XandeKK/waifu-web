@@ -1,0 +1,24 @@
+
+<div class="container mx-auto my-10">
+    <form id="form" action='/upload' enctype="multipart/form-data" method='POST'>
+        <div class="mb-6">
+            <label for="model" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Model</label>
+            <select name="model" class="zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-zinc-500 focus:border-zinc-500 block w-full p-2.5 dark:bg-zinc-800 dark:border-zinc-700 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-zinc-500 dark:focus:border-zinc-500">
+                <option value="models-cunet">models-cunet</option>
+                <option selected value="models-upconv_7_anime_style_art_rgb">models-upconv_7_anime_style_art_rgb</option>
+                <option value="models-upconv_7_photo">models-upconv_7_photo</option>
+            </select>
+        </div>
+        <div class="mb-6">
+            <label for="files" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Files</label>
+            <input id="files" name="files" class="block w-full text-sm text-zinc-900 border border-zinc-300 rounded-lg cursor-pointer bg-zinc-50 dark:text-zinc-400 focus:outline-none dark:bg-zinc-800 dark:border-zinc-700 dark:placeholder-zinc-400" type="file" accept="image/*" multiple />
+            <div id="preview" class="flex flex-wrap p-5"></div>
+        </div>
+        <input type="submit" class="text-white bg-zinc-700 hover:bg-zinc-800 focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-zinc-600 dark:hover:bg-zinc-700 dark:focus:ring-zinc-800 " value="Upload" />
+    </form>
+
+    <div class="pt-10">
+        <p class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Output</p>
+        <div id="output" class="flex flex-wrap"></div>
+    </div>
+</div>
