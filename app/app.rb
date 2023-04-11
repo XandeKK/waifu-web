@@ -41,13 +41,17 @@ class App < Sinatra::Base
   post '/upload' do
     filename = SecureRandom.uuid + "-" + params[:file][:filename]
     tempfile = params[:file][:tempfile]
-    model = params[:model]
+    model = params[:model] 
+    noise_level = params[:noise_level] || 0
+    scale = params[:scale] || 2
+    gpu_id = params[:gpu_id] || "auto"
+    load_proc_save = params[:load_proc_save] || "1:2:2"
     target = "public/tmp/#{filename}"
     target_modified = "public/tmp/upscaled-#{filename}"
 
     File.open(target, 'wb') {|f| f.write tempfile.read }
 
-    system "./app/lib/waifu2x-vulkan/waifu2x -m #{model} -i #{target} -o #{target_modified}"
+    system "./app/lib/waifu2x-vulkan/waifu2x -m #{model} -i #{target} -o #{target_modified} -n #{noise_level} -s #{scale} -g #{gpu_id} -j #{load_proc_save}"
     JobFile.perform(target, 5)
     JobFile.perform(target_modified, 5)
 
