@@ -52,11 +52,10 @@ class App < Sinatra::Base
     File.open(target, 'wb') {|f| f.write tempfile.read }
 
     system "./app/lib/waifu2x-vulkan/waifu2x -m #{model} -i #{target} -o #{target_modified} -n #{noise_level} -s #{scale} -g #{gpu_id} -j #{load_proc_save}"
-    JobFile.perform(target, 5)
-    JobFile.perform(target_modified, 5)
+    JobFile.perform(target, 10)
+    JobFile.perform(target_modified, 60)
 
-    content_type :json
-    { message: "OK", image_path: target_modified.split("/").last }.to_json
+    send_file(target_modified)
   end
 
   get '/image/:filename' do

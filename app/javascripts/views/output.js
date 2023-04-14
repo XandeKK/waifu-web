@@ -1,6 +1,7 @@
 document.querySelector("#form").addEventListener("submit", (event)=>{
 	event.preventDefault();
 
+	window.images = []
 	const output = document.querySelector("#output");
 	const data = new FormData(event.target);
 	const model = data.get('model');
@@ -23,7 +24,9 @@ document.querySelector("#form").addEventListener("submit", (event)=>{
 		const response = await postData("/upload", data_to_send);
 
 		const img = document.createElement("img");
-		img.src = "/image/" + response.image_path;
+		const blob = await response.blob();
+		window.images.push({'filename': file['name'],'img': response, 'blob': blob});
+		img.src = URL.createObjectURL(blob);
 
 		output.append(img);
 	})
@@ -35,5 +38,5 @@ async function postData(url = "", data = {}) {
     body: data,
   });
 
-  return response.json();
+  return response;
 }
